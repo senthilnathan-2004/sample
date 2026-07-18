@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Single-color brand system (spec §B7). No gradients. No other hues. ── */
+:root {
+  --brand: #d2388d; /* primary — buttons, links, active, focus ring, rating pill accent */
+  --brand-hover: #b02a75; /* darker magenta — hover/pressed */
+  --brand-tint: #fbeaf4; /* very light magenta — badges, selected chips, fills */
+  --brand-tint-strong: #f3cfe4; /* light magenta — chip hover, table row hover */
+
+  --text: #301812;
+  --text-muted: #6b5b54;
+  --bg: #ffffff;
+  --bg-cream: #fbf8f5;
+  --border: #ece4df;
+
+  --success: #2e7d46; /* delivered / paid states ONLY */
+  --warning: #b9791c; /* pending / in-progress states ONLY */
+  --info: #1f6fb2; /* "ready"/neutral-info status ONLY, not decorative */
+}
+
+* {
+  border-color: var(--border);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body), system-ui, sans-serif;
+  /* prevent horizontal scroll from any single overflowing child */
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+.font-heading {
+  font-family: var(--font-heading), system-ui, sans-serif;
+}
+
+/* Visible 2px magenta focus ring on every interactive element (a11y). */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Honor reduced-motion globally. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Print: hide site chrome and non-invoice UI; show only the invoice. */
+@media print {
+  header,
+  footer,
+  nav,
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+  }
+  main {
+    padding: 0 !important;
+  }
+}
+
+/* Utility: horizontal scroll container with hidden scrollbar (category strip). */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
